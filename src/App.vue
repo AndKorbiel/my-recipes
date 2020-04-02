@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="Welcome to Your Vue.js App" :val=name />
+    <h2>{{name}}</h2>
   </div>
 </template>
 
@@ -12,9 +13,21 @@ export default {
   name: 'App',
   components: {
     HelloWorld
+  },
+  data: function() {
+    return {
+      name: 'and'
+    }
   }
 }
 </script>
+<style lang="scss">
+  @import './sass/main.scss';
+
+  body {
+    color: $color;
+  }
+</style>
 
 <style>
 #app {
