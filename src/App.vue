@@ -1,23 +1,30 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" :messageToProps=secretMesage />
-    <h2>{{name}}</h2>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="product-list">
+            <SingleProduct v-for="product of products" :key="product" :productName="product" />
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SingleProduct from "./components/SingleProduct";
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    SingleProduct,
   },
   data: function() {
     return {
-      name: 'Sand',
-      secretMesage: 'My secret word and very secret number == 2'
+      products: [
+        "kapusta", "ziemniaki", "marchew", "kurczak"
+      ]
     }
   }
 }
@@ -27,6 +34,10 @@ export default {
 
   body {
     color: $color;
+  }
+
+  .product-list {
+    display: flex;
   }
 </style>
 
