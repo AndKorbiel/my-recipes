@@ -3,7 +3,8 @@
     <div class="row">
       <div class="col-sm-12">
         <h1>{{ msg }}</h1>
-        <h2>So your val is: {{ val }}</h2>
+        <h2>So your val is: {{ messageToProps }}</h2>
+        <p>A this imy local data: {{ myLocalData }}</p>
       </div>
     </div>
   </div>
@@ -14,8 +15,13 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String,
-    val: String,
+    messageToProps: String,
   },
+  data: function () {
+    return {
+      myLocalData: 'This is my Local data'
+    }
+  }
 }
 </script>
 

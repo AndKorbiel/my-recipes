@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" :val=name />
+    <HelloWorld msg="Welcome to Your Vue.js App" :messageToProps=secretMesage />
     <h2>{{name}}</h2>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
   },
   data: function() {
     return {
-      name: 'and'
+      name: 'Sand',
+      secretMesage: 'My secret word and very secret number == 2'
     }
   }
 }
