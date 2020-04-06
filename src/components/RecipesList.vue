@@ -1,22 +1,29 @@
 <template>
-  <div class="recipe-list">
-    <ul>
-      <li v-for="product of selectedProducts" :key="product">{{ product }}</li>
-    </ul>
-  </div>
+    <div class="recipe-list">
+      <h2>Products you have:</h2>
+        <ul class="temp">
+            <li v-for="product of selectedProducts" :key="product">{{ product }}</li>
+        </ul>
+      <SingleRecipe :recipes="recipes" />
+    </div>
 </template>
 
 <script>
-export default {
-  name: "RecipeList",
-  props: {
-    selectedProducts: Array
-  }
-};
+  import SingleRecipe from "./SingleRecipe";
+    export default {
+        name: "RecipeList",
+        props: {
+            selectedProducts: Array,
+            recipes: Array,
+        },
+      components: {
+          SingleRecipe
+      }
+    };
 </script>
 
 <style lang="scss">
-.recipe-list {
-  display: flex;
-}
+    .recipe-list {
+        display: flex;
+    }
 </style>
