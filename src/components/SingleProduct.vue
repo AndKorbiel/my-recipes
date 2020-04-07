@@ -28,6 +28,7 @@
     .single-product {
         border: 1px solid grey;
         padding: 20px 15px;
+        margin: 5px;
 
         h3 {
             margin-bottom: 0;
