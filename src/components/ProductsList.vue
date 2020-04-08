@@ -33,6 +33,7 @@
         padding: 15px;
         box-shadow: 2px 2px 11px #929292;
         flex-wrap: wrap;
+        justify-content: center;
 
         .heading {
             width: 100%;

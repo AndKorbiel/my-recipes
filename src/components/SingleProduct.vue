@@ -33,6 +33,7 @@
             margin-bottom: 0;
             padding: 20px 15px;
             background: #fff8c6;
+            cursor: pointer;
         }
 
         .selected {

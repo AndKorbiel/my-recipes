@@ -28,13 +28,17 @@
         },
         data: function () {
             return {
-                products: ["kapusta", "ziemniaki", "marchew", "kurczak"],
+                products: ["cabbage", "potatoes", "carrot", "chicken", "beef", "cod", "apples", "wine", "leek", "onion", "mushrooms", "peach", "plums"],
                 selectedProducts: [],
                 recipes: [
-                    {id: 1, title: "Kurczak z kapustką", ingredients: ["kurczak", "kapusta", "omasta"]},
-                    {id: 2, title: "Marchew z kapustką", ingredients: ["marchew", "kapusta"]},
-                    {id: 3, title: "Kapusta z ziemniakami", ingredients: ["kapusta", "ziemniaki"]},
-                    {id: 4, title: "Kurczak z ziemniakami i marchewką i kapustką", ingredients: ["kurczak", "ziemniaki", "marchew", "kapusta"]},
+                    {id: 1, title: "Chicken with cabbage and potatoes", ingredients: ["chicken", "cabbage", "potatoes"]},
+                    {id: 2, title: "Carrot with cabbage", ingredients: ["carrot", "cabbage"]},
+                    {id: 3, title: "Cabbage with potatoes", ingredients: ["cabbage", "potatoes"]},
+                    {id: 4, title: "Chicken with potatoes, carrot and cabbage", ingredients: ["chicken", "potatoes", "carrot", "cabbage"]},
+                    {id: 5, title: "Beef in wine with cabbage", ingredients: ["beef", "cabbage", "wine"]},
+                    {id: 6, title: "Chicken with mushrooms and onion", ingredients: ["chicken", "mushrooms", "onion"]},
+                    {id: 7, title: "Apples in wine with carrot", ingredients: ["apples", "carrot", "wine"]},
+                    {id: 8, title: "Chicken with potatoes, carrot, leek and peach", ingredients: ["potatoes", "leek", "peach", "carrot", "chicken"]},
                     ],
                 availableRecipes: []
             };

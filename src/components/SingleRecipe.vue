@@ -49,9 +49,11 @@
 
     .all-recipes .recipe-container {
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
         .single-recipe {
-            max-width: 250px;
+            max-width: 212px;
         }
     }
 </style>
