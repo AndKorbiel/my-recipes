@@ -6,7 +6,7 @@
                     <ProductsList :products="products" :selectProduct="selectProduct"/>
                 </div>
             </div>
-            <RecipeList :selectedProducts="selectedProducts" :recipes="recipes" :availableRecipes="availableRecipes" />
+            <RecipeList :selectedProducts="selectedProducts" :recipes="recipes" :availableRecipes="this.availableRecipes" />
         </div>
     </div>
 </template>
@@ -46,20 +46,18 @@
                 this.checkMatch();
             },
             checkMatch: function () {
-                let { selectedProducts, recipes, availableRecipes } = this;
-
-                recipes.forEach((el)=> {
+                this.recipes.forEach((el)=> {
                     const ingredientsAmmount = el.ingredients.length;
                     let matches = 0;
 
-                    if (el.ingredients.length > selectedProducts.length) {
-                        if (availableRecipes.includes(el)) {
-                            availableRecipes = availableRecipes.filter(elem => elem !== el)
+                    if (el.ingredients.length > this.selectedProducts.length) {
+                        if (this.availableRecipes.includes(el)) {
+                            this.availableRecipes = this.availableRecipes.filter(elem => elem !== el)
                         }
                         return false
                     } else {
                         el.ingredients.forEach((element)=>{
-                            selectedProducts.forEach((product) => {
+                            this.selectedProducts.forEach((product) => {
                                 if (product.toLowerCase() === element.toLowerCase()) {
                                     matches++;
                                 }
@@ -68,11 +66,11 @@
                     }
 
                     if (matches === ingredientsAmmount) {
-                        if (!availableRecipes.includes(el)) {
-                            availableRecipes.push(el)
+                        if (!this.availableRecipes.includes(el)) {
+                            this.availableRecipes.push(el)
                         }
-                    } else if (availableRecipes.includes(el)) {
-                        availableRecipes = availableRecipes.filter(elem => elem !== el)
+                    } else if (this.availableRecipes.includes(el)) {
+                        this.availableRecipes = this.availableRecipes.filter(elem => elem !== el)
                     }
                 })
             },
