@@ -1,5 +1,8 @@
 <template>
     <div class="product-list">
+        <div class="heading">
+            <h2>Select the ingredients you have</h2>
+        </div>
         <SingleProduct v-for="product of products" :key="product"
                        :productName="product"
                        :selectProduct="selectProduct"
@@ -22,9 +25,17 @@
     }
 </script>
 
-<style>
-    .product-list {
+<style lang="scss">
+    .product-list, .recipes-list {
         display: flex;
         margin-bottom: 20px;
+        background: rgba(255, 255, 255, 0.749);
+        padding: 15px;
+        box-shadow: 2px 2px 11px #929292;
+        flex-wrap: wrap;
+
+        .heading {
+            width: 100%;
+        }
     }
 </style>

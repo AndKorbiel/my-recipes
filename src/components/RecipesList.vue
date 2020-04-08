@@ -1,13 +1,9 @@
 <template>
-    <div class="recipe-list">
-        <h2>To nasze wszystkie przepisy</h2>
+    <div :class="className">
+        <div class="heading">
+            <h2>{{ headingText }}</h2>
+        </div>
         <SingleRecipe :recipes="recipes"/>
-        <h2>Produkty które masz</h2>
-        <ul class="temp">
-            <li v-for="product of selectedProducts" :key="product">{{ product }}</li>
-        </ul>
-        <h2>A to nasze pasujące przepisy</h2>
-        <SingleRecipe :recipes="availableRecipes"/>
     </div>
 </template>
 
@@ -16,9 +12,9 @@
     export default {
         name: "RecipeList",
         props: {
-            selectedProducts: Array,
             recipes: Array,
-            availableRecipes: Array
+            headingText: String,
+            className: String,
         },
       components: {
           SingleRecipe

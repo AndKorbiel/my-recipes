@@ -1,6 +1,6 @@
 <template>
     <div class="single-product">
-        <h3 :value="productName" @click="selectProduct(productName), select()" :class="{selected: selected}">{{ productName }}</h3>
+        <p :value="productName" @click="selectProduct(productName), select()" :class="{selected: selected}">{{ productName }}</p>
     </div>
 </template>
 
@@ -26,16 +26,17 @@
 
 <style lang="scss">
     .single-product {
-        border: 1px solid grey;
-        padding: 20px 15px;
         margin: 5px;
+        box-shadow: 2px 2px 4px #8c8c8c;
 
-        h3 {
+        p {
             margin-bottom: 0;
+            padding: 20px 15px;
+            background: #fff8c6;
         }
-    }
 
-    .selected {
-        background: bisque;
+        .selected {
+            background: #83efae;
+        }
     }
 </style>

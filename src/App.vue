@@ -1,12 +1,17 @@
 <template>
     <div id="app">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-12 col-md-3">
                     <ProductsList :products="products" :selectProduct="selectProduct"/>
                 </div>
+                <div class="col-sm-12 col-md-6">
+                    <RecipeList :recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes" />
+                </div>
+                <div class="col-sm-12 col-md-3">
+                    <RecipeList :recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list" />
+                </div>
             </div>
-            <RecipeList :selectedProducts="selectedProducts" :recipes="recipes" :availableRecipes="this.availableRecipes" />
         </div>
     </div>
 </template>
@@ -81,6 +86,7 @@
     @import "./sass/main.scss";
 
     body {
+        background: url('./assets/bg.jpg');
         color: $color;
     }
 
@@ -91,5 +97,9 @@
         text-align: center;
         color: #2c3e50;
         margin-top: 60px;
+
+        h2, .h2 {
+            font-size: 25px;
+        }
     }
 </style>
