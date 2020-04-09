@@ -1,10 +1,8 @@
-<template>
-    <div :class="className">
-        <div class="heading">
-            <h2>{{ headingText }}</h2>
-        </div>
-        <SingleRecipe :recipes="recipes"/>
-    </div>
+<template lang="pug">
+    div(:class="className")
+        .heading
+            h2 {{ headingText }}
+        SingleRecipe(:recipes="recipes")
 </template>
 
 <script>

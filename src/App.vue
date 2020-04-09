@@ -1,19 +1,13 @@
-<template>
-    <div id="app">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12 col-md-3">
-                    <ProductsList :products="products" :selectProduct="selectProduct"/>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <RecipeList :recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes" />
-                </div>
-                <div class="col-sm-12 col-md-3">
-                    <RecipeList :recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list" />
-                </div>
-            </div>
-        </div>
-    </div>
+<template lang="pug">
+    #app
+        .container-fluid
+            .row
+                .col-sm-12.col-md-3
+                    ProductsList(:products="products" :selectProduct="selectProduct")
+                .col-sm-12.col-md-6
+                    RecipeList(:recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes")
+                .col-sm-12.col-md-3
+                    RecipeList(:recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list")
 </template>
 
 <script>
@@ -91,7 +85,6 @@
 
     body {
         background: url('./assets/bg.jpg');
-        color: $color;
     }
 
     #app {

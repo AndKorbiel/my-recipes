@@ -1,13 +1,11 @@
-<template>
-    <div class="product-list">
-        <div class="heading">
-            <h2>Select the ingredients you have</h2>
-        </div>
-        <SingleProduct v-for="product of products" :key="product"
-                       :productName="product"
-                       :selectProduct="selectProduct"
-        />
-    </div>
+<template lang="pug">
+    .product-list
+        .heading
+            h2 Select the ingredients you have
+        SingleProduct(v-for="product of products"
+            :key="product"
+            :productName="product"
+            :selectProduct="selectProduct")
 </template>
 
 <script>

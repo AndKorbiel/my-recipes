@@ -1,12 +1,9 @@
-<template>
-        <div class="recipe-container">
-            <div class="single-recipe" v-for="recipe in recipes" :key="recipe.title">
-                <h3>{{ recipe.title }}</h3>
-                <ul v-for="ingredient in recipe.ingredients" :key="ingredient">
-                    <li>{{ ingredient }}</li>
-                </ul>
-            </div>
-        </div>
+<template lang="pug">
+        .recipe-container
+            .single-recipe(v-for="recipe in recipes" :key="recipe.title")
+                h3 {{ recipe.title }}
+                ul(v-for="ingredient in recipe.ingredients" :key="ingredient")
+                    li {{ ingredient }}
 </template>
 
 <script>
@@ -20,6 +17,8 @@
 </script>
 
 <style lang="scss">
+    @import "src/sass/main";
+
     .recipe-container {
         display: block;
         width: 100%;
@@ -27,7 +26,7 @@
         .single-recipe {
             padding: 10px;
             margin: 5px;
-            background: #eae3d9;
+            background: $recipe-bg-color;
             border: 1px solid #d0d0d0;
             box-shadow: 1px 1px 3px #cccccc;
         }
