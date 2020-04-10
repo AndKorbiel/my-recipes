@@ -3,8 +3,8 @@
         .heading
             h2 Select the ingredients you have
         SingleProduct(v-for="product of products"
-            :key="product"
-            :productName="product"
+            :key="product.id"
+            :productName="product.name"
             :selectProduct="selectProduct")
 </template>
 

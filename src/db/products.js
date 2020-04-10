@@ -12,7 +12,6 @@ function getAll() {
 }
 
 function create(product) {
-
     const result = Joi.validate(product, schema);
     if (result.error == null) {
         product.created = new Date();
