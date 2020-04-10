@@ -4,6 +4,7 @@
             .row
                 .col-sm-12.col-md-3
                     ProductsList(:products="products" :selectProduct="selectProduct")
+                    SubmitForm(:error="error" :element="product" :method="addProduct" :message="message")
                 .col-sm-12.col-md-6
                     RecipeList(:recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes")
                 .col-sm-12.col-md-3
@@ -13,6 +14,8 @@
 <script>
     import RecipeList from "./components/RecipesList";
     import ProductsList from "./components/ProductsList";
+    import SubmitForm from "./components/SubmitForm";
+
     const PRODUCTS_API_URL = "http://localhost:4000/products";
     const RECIPES_API_URL = "http://localhost:4000/recipes";
 
@@ -20,7 +23,8 @@
         name: "App",
         components: {
             RecipeList,
-            ProductsList
+            ProductsList,
+            SubmitForm
         },
         data: function () {
             return {
@@ -37,9 +41,16 @@
                 //     {id: 8, title: "Chicken with potatoes, carrot, leek and peach", ingredients: ["potatoes", "leek", "peach", "carrot", "chicken"]},
                 //     ],
                 availableRecipes: [],
-                errors: [],
+                error: '',
+                message: '',
                 products: [],
-                recipes: []
+                product: {
+                    name: ''
+                },
+                recipes: [],
+                recipe: {
+                    title: ''
+                }
             };
         },
         mounted() {
@@ -55,7 +66,7 @@
                 });
         },
         methods: {
-            selectProduct: function (product) {
+            selectProduct(product) {
                 if (this.selectedProducts.includes(product)) {
                     this.selectedProducts = this.selectedProducts.filter(
                         el => el !== product
@@ -65,9 +76,8 @@
                 }
                 this.checkMatch();
             },
-            checkMatch: function () {
+            checkMatch() {
                 this.recipes.forEach((el)=> {
-                    console.log(el)
                     const ingredientsAmmount = el.ingredients.length;
                     let matches = 0;
 
@@ -94,8 +104,29 @@
                         this.availableRecipes = this.availableRecipes.filter(elem => elem !== el)
                     }
                 })
-                console.log(this.availableRecipes)
             },
+            addProduct() {
+                fetch(PRODUCTS_API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(this.product),
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                    if (result.details) {
+                        const error = result.details
+                            .map(detail => detail.message)
+                            .join(". ");
+                        this.error = error;
+                        this.message = ''
+                    } else {
+                        this.error = "";
+                        this.message = `Product: ${this.product.name} has been added`
+                    }
+                })
+            }
         }
     };
 </script>

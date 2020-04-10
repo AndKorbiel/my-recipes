@@ -35,7 +35,10 @@ app.post('/recipes', (req, res)=> {
         .then(recipe => {
             res.json(recipe)
         })
-        .catch(err => res.status(500).send(err))
+        .catch(err => {
+            res.status(500);
+            res.json(err);
+        })
 });
 
 app.post('/products', (req, res)=> {
@@ -44,7 +47,10 @@ app.post('/products', (req, res)=> {
         .then(product => {
             res.json(product)
         })
-        .catch(err => res.status(500).send(err))
+        .catch(err => {
+            res.status(500);
+            res.json(err);
+        })
 });
 
 const port = process.env.port || 4000;
