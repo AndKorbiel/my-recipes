@@ -4,11 +4,25 @@
             .row
                 .col-sm-12.col-md-3
                     ProductsList(:products="products" :selectProduct="selectProduct")
-                    SubmitForm(:error="error" :element="product" :method="addProduct" :message="message")
+                    SubmitForm(
+                        :error="errors.products"
+                        mode="Product"
+                        :element="product"
+                        :method="addProduct"
+                        :message="messages.products"
+                        headingText="Add new product"
+                        placeholder="Product name")
                 .col-sm-12.col-md-6
                     RecipeList(:recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes")
                 .col-sm-12.col-md-3
                     RecipeList(:recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list")
+                    SubmitForm(
+                        :errors="errors.recipes"
+                        :element="recipe"
+                        :method="addRecipe"
+                        :message="messages.recipes"
+                        headingText="Add new recipe"
+                        placeholder="Recipe title")
 </template>
 
 <script>
@@ -41,15 +55,22 @@
                 //     {id: 8, title: "Chicken with potatoes, carrot, leek and peach", ingredients: ["potatoes", "leek", "peach", "carrot", "chicken"]},
                 //     ],
                 availableRecipes: [],
-                error: '',
-                message: '',
+                errors: {
+                    products: '',
+                    recipes: ''
+                },
+                messages: {
+                    products: '',
+                    recipes: ''
+                },
                 products: [],
                 product: {
                     name: ''
                 },
                 recipes: [],
                 recipe: {
-                    title: ''
+                    title: '',
+                    ingredients: []
                 }
             };
         },
@@ -119,15 +140,42 @@
                         const error = result.details
                             .map(detail => detail.message)
                             .join(". ");
-                        this.error = error;
-                        this.message = ''
+                        this.errors.products = error;
+                        this.messages.products = ''
                     } else {
-                        this.error = "";
-                        this.message = `New product: ${this.product.name} has been added`;
+                        this.errors.products = "";
+                        this.messages.products = `New product: ${this.product.name} has been added`;
                         this.product.name = "";
                         this.products.push(result)
                     }
                 })
+            },
+            addRecipe() {
+                this.recipe.ingredients = this.recipe.ingredients.split(",");
+
+                fetch(RECIPES_API_URL, {
+                    method: "POST",
+                    body: JSON.stringify(this.recipe),
+                    headers: {
+                        "content-type": "application/json"
+                    }
+                })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (result.details) {
+                            const error = result.details
+                                .map(detail => detail.message)
+                                .join(". ");
+                            this.errors.recipes = error;
+                            this.messages.recipes = ''
+                        } else {
+                            this.errors.recipes = "";
+                            this.messages.recipes = `New recipe: ${this.recipe.title} has been added`;
+                            this.recipe.title = "";
+                            this.recipe.ingredients = [];
+                            this.recipes.push(result)
+                        }
+                    })
             }
         }
     };
