@@ -123,7 +123,9 @@
                         this.message = ''
                     } else {
                         this.error = "";
-                        this.message = `Product: ${this.product.name} has been added`
+                        this.message = `New product: ${this.product.name} has been added`;
+                        this.product.name = "";
+                        this.products.push(result)
                     }
                 })
             }
