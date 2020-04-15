@@ -2,7 +2,7 @@ const Joi = require('joi');
 const db = require('./connection');
 
 const schema = Joi.object().keys({
-    name: Joi.string().alphanum().required(),
+    name: Joi.string().required(),
 });
 
 const products = db.get('products');

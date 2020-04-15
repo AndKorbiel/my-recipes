@@ -151,11 +151,11 @@
                 })
             },
             addRecipe() {
-                this.recipe.ingredients = this.recipe.ingredients.split(",");
+                let formattedRecipe = this.formatRecipe(this.recipe)
 
                 fetch(RECIPES_API_URL, {
                     method: "POST",
-                    body: JSON.stringify(this.recipe),
+                    body: JSON.stringify(formattedRecipe),
                     headers: {
                         "content-type": "application/json"
                     }
@@ -176,6 +176,16 @@
                             this.recipes.push(result)
                         }
                     })
+            },
+            formatRecipe(myRecipe) {
+                let recipeFormatted = myRecipe;
+                recipeFormatted.ingredients = recipeFormatted.ingredients.split(",")
+                    .map(el => {
+                    return el.trim().replace(/ +(?= )/g,'');
+                })
+                    .filter(el => el.length > 0);
+
+                return recipeFormatted
             }
         }
     };
