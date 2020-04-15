@@ -151,7 +151,7 @@
                 })
             },
             addRecipe() {
-                let formattedRecipe = this.formatRecipe(this.recipe)
+                let formattedRecipe = this.formatRecipe(this.recipe);
 
                 fetch(RECIPES_API_URL, {
                     method: "POST",

@@ -1,37 +1,30 @@
-<template>
-    <div class="sub-form">
-        <p v-if="message" class="message">{{ message }}</p>
-        <form @submit.prevent="method" class="mb-3">
-            <div v-if="error" class="alert alert-dismissible alert-warning">
-                <h4 class="alert-heading">Error!</h4>
-                <p class="mb-0">{{ error }}</p>
-            </div>
-            <div class="form-group">
-                <h2> {{ headingText }}</h2>
-                <b-input-group v-if="mode === 'Product'">
-                    <input
+<template lang="pug">
+    .sub-form
+        p(v-if="message" class="message") {{ message }}
+        form.mb-3(@submit.prevent="method")
+            .alert.alert-dismissible.alert-warning(v-if="error")
+                h4.alert-heading Error!
+                p.mb-0 {{ error }}
+            .form-group
+                h2 {{ headingText }}
+                b-input-group(v-if="mode === 'Product'")
+                    input(
                            v-model="element.name"
                            type="text"
                            class="form-control"
-                           :placeholder="placeholder" required>
-                </b-input-group>
-                <b-input-group v-else>
-                    <input
+                           :placeholder="placeholder" required)
+                b-input-group(v-else)
+                    input(
                             v-model="element.title"
                             type="text"
                             class="form-control"
-                            :placeholder="placeholder" required>
-                    <input
+                            :placeholder="placeholder" required)
+                    input(
                             v-model="element.ingredients"
                             type="text"
                             class="form-control"
-                            placeholder="Add ingredients separated by comma" required>
-                </b-input-group>
-
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
+                            placeholder="Add ingredients separated by comma" required)
+            button.btn.btn-primary(type="submit") Submit
 </template>
 
 <script>
