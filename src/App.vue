@@ -30,7 +30,7 @@
     import ProductsList from "./components/ProductsList";
     import SubmitForm from "./components/SubmitForm";
 
-    const PRODUCTS_API_URL = "http://localhost:4000/products";
+    const PRODUCTS_API_URL = "http://localhost:4000/products/";
     const RECIPES_API_URL = "http://localhost:4000/recipes";
 
     export default {
@@ -75,7 +75,7 @@
             };
         },
         mounted() {
-            fetch(PRODUCTS_API_URL)
+            fetch(PRODUCTS_API_URL + 'getAll')
                 .then(response => response.json())
                 .then(result => {
                     this.products = result;
@@ -127,7 +127,7 @@
                 })
             },
             addProduct() {
-                fetch(PRODUCTS_API_URL, {
+                fetch(PRODUCTS_API_URL + 'add', {
                     method: "POST",
                     body: JSON.stringify(this.product),
                     headers: {

@@ -1,11 +1,27 @@
 const Joi = require('joi');
+const mongoose = require("mongoose");
 const db = require('./connection');
 
-const schema = Joi.object().keys({
-    name: Joi.string().required(),
+const productSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Product name is required"]
+    },
+},{
+    timestamps: true
 });
 
-const products = db.get('products');
+const Product = mongoose.model("User", productSchema);
+module.exports = Product;
+
+
+// const schema = Joi.object().keys({
+//     name: Joi.string().required(),
+// });
+
+// const Products = db.get('products');
+
+
 
 function getAll() {
     return products.find()
