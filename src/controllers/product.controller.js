@@ -20,8 +20,8 @@ exports.product_add = function (req, res) {
 
     product.save(function (err) {
         if (err) {
-            return next(err);
+            return res.json({status: 500, error: err});
         }
-        res.send('Product Created successfully')
+        res.send({status: 200, message: 'Product added successfully', details: product})
     })
 };

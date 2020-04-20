@@ -17,7 +17,7 @@
                 .col-sm-12.col-md-3
                     RecipeList(:recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list")
                     SubmitForm(
-                        :errors="errors.recipes"
+                        :error="errors.recipes"
                         :element="recipe"
                         :method="addRecipe"
                         :message="messages.recipes"
@@ -31,7 +31,7 @@
     import SubmitForm from "./components/SubmitForm";
 
     const PRODUCTS_API_URL = "http://localhost:4000/products/";
-    const RECIPES_API_URL = "http://localhost:4000/recipes";
+    const RECIPES_API_URL = "http://localhost:4000/recipes/";
 
     export default {
         name: "App",
@@ -80,7 +80,7 @@
                 .then(result => {
                     this.products = result;
                 });
-            fetch(RECIPES_API_URL)
+            fetch(RECIPES_API_URL + 'getAll')
                 .then(response => response.json())
                 .then(result => {
                     this.recipes = result;
@@ -136,24 +136,21 @@
                 })
                     .then(response => response.json())
                     .then(result => {
-                    if (result.details) {
-                        const error = result.details
-                            .map(detail => detail.message)
-                            .join(". ");
-                        this.errors.products = error;
+                    if (result.status !== 200) {
+                        this.errors.products = result.message;
                         this.messages.products = ''
                     } else {
                         this.errors.products = "";
                         this.messages.products = `New product: ${this.product.name} has been added`;
+                        this.products.push(result.details);
                         this.product.name = "";
-                        this.products.push(result)
                     }
                 })
             },
             addRecipe() {
                 let formattedRecipe = this.formatRecipe(this.recipe);
 
-                fetch(RECIPES_API_URL, {
+                fetch(RECIPES_API_URL + 'add', {
                     method: "POST",
                     body: JSON.stringify(formattedRecipe),
                     headers: {
@@ -162,18 +159,15 @@
                 })
                     .then(response => response.json())
                     .then(result => {
-                        if (result.details) {
-                            const error = result.details
-                                .map(detail => detail.message)
-                                .join(". ");
-                            this.errors.recipes = error;
+                        if (result.status !== 200) {
+                            this.errors.recipes = result.error._message;
                             this.messages.recipes = ''
                         } else {
                             this.errors.recipes = "";
                             this.messages.recipes = `New recipe: ${this.recipe.title} has been added`;
                             this.recipe.title = "";
                             this.recipe.ingredients = [];
-                            this.recipes.push(result)
+                            this.recipes.push(result.details)
                         }
                     })
             },

@@ -1,6 +1,6 @@
 <template lang="pug">
         .recipe-container
-            .single-recipe(v-for="recipe in recipes" :key="recipe.title")
+            .single-recipe(v-for="recipe in recipes" :key="recipe._id")
                 h3 {{ recipe.title }}
                 ul(v-for="ingredient in recipe.ingredients" :key="ingredient")
                     li {{ ingredient }}

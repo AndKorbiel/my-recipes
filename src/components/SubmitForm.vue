@@ -18,7 +18,7 @@
                             v-model="element.title"
                             type="text"
                             class="form-control"
-                            :placeholder="placeholder" required)
+                            :placeholder="placeholder" )
                     input(
                             v-model="element.ingredients"
                             type="text"
@@ -60,6 +60,10 @@
             color: #fff;
             background: #719c1e;
             padding: 5px;
+        }
+
+        .alert-dismissible {
+            padding-right: 0;
         }
     }
 </style>
