@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const port = process.env.port || 4000;
+const { APP_PORT, URI_MONGO } = require('./config');
 const product = require('./routes/product.route');
 const recipe = require('./routes/recipe.route');
+const user = require('./routes/user.route');
 const mongoose = require('mongoose');
+const initializeData = require('./seed/user.seeder');
 
 const app = express();
 app.use(cors());
@@ -12,18 +14,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use('/products', product);
 app.use('/recipes', recipe);
+app.use('/users', user);
 
-const mongoDB = process.env.MONGODB_URI || 'mongodb://localhost:27017/productsList';
 const db = mongoose.connection;
 
-mongoose.connect(mongoDB, {useNewUrlParser: true});
+mongoose.connect(URI_MONGO, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
 
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on('connected', () => {
+    initializeData();
+});
+
 db.once('open', function() {
     console.log('Db is connected!')
 });
 
-app.listen(port, ()=>{
-    console.log(`App is listening on port: ${port}`)
+db.on('error', (err) => {
+    console.log('Error: Could not connect to MongoDB.', err);
+});
+
+app.listen(APP_PORT, ()=>{
+    console.log(`App is listening on port: ${APP_PORT}`)
 });
