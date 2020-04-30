@@ -12,7 +12,7 @@ function auth(to, from, next) {
 
 const App = () => import("./App");
 const HomePage = () => import("./views/HomePage");
-const Login = () => import("./views/LoginPage");
+const LoginPage = () => import("./views/LoginPage");
 
 Vue.use(Router);
 
@@ -27,7 +27,7 @@ export default new Router({
         {
             path: "/login",
             name: "login",
-            component: Login
+            component: LoginPage
         },
         {
             path: "/home",

@@ -13,6 +13,17 @@
                            type="text"
                            class="form-control"
                            :placeholder="placeholder" required)
+                b-input-group(v-else-if="mode === 'Login'")
+                    input(
+                        v-model="element.email"
+                        type="text"
+                        class="form-control"
+                        :placeholder="placeholder" required)
+                    input(
+                        v-model="element.password"
+                        type="password"
+                        class="form-control"
+                        :placeholder="placeholder" required)
                 b-input-group(v-else)
                     input(
                             v-model="element.title"

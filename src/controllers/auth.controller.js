@@ -60,10 +60,10 @@ exports.createUser = (req, res, next) => {
 exports.loginUser = (req, res, next) => {
     UserSchema.findOne({
         email: req.body.email
-    }, (err, user) => {
+    }, function(err, user) {
         if (err || !user) {
         res.status(401).send({
-            message: "Unauthorized"
+            message: "Invalid email"
         });
         next(err)
     } else {
@@ -71,7 +71,7 @@ exports.loginUser = (req, res, next) => {
             res.json(generateTokens(req, user));
         } else {
             res.status(401).send({
-                message: "Invalid email/password"
+                message: "Invalid password"
             })
         }
     }
