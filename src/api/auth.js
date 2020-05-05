@@ -57,21 +57,21 @@ export function isValidAccessToken() {
 
 export async function initializationUserAuthentication() {
     if (checkTokenValidity(getAccessToken())) {
-        const data = {
-            accessToken: getAccessToken(),
-            refreshToken: getRefreshToken()
-        };
-        return await store.dispatch("auth/authorize", data);
+        // const data = {
+        //     accessToken: getAccessToken(),
+        //     refreshToken: getRefreshToken()
+        // };
+        // return await store.dispatch("auth/authorize", data);
     } else {
         if (checkTokenValidity(getRefreshToken())) {
-            return await store
-                .dispatch("auth/refreshToken")
-                .then(() => {
-                    return Promise.resolve();
-                })
-                .catch(e => {
-                    return Promise.reject(e);
-                });
+            // return await store
+            //     .dispatch("auth/refreshToken")
+            //     .then(() => {
+            //         return Promise.resolve();
+            //     })
+            //     .catch(e => {
+            //         return Promise.reject(e);
+            //     });
         }
     }
 }

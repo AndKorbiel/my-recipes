@@ -48,7 +48,6 @@
                 })
                     .then(response => response.json())
                     .then(result => {
-                        console.log(result)
                         if (result.status !== 200) {
                             this.errors.users = result.message;
                             this.messages.users = ''
@@ -58,6 +57,9 @@
                             this.products.push(result.details);
                             this.product.name = "";
                         }
+                    })
+                    .then(() => {
+                        this.$router.push({ name: "homePage" });
                     })
             }
         }
