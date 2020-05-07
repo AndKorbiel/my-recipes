@@ -3,24 +3,24 @@
         .container-fluid
             .row
                 .col-sm-12.col-md-3
-                    ProductsList(:products="products" :selectProduct="selectProduct")
+                    ProductsList(:selectProduct="selectProduct")
                     SubmitForm(
-                        :error="errors.products"
+                        :error="$store.state.errors.products"
                         mode="Product"
                         :element="product"
                         :method="addProduct"
-                        :message="messages.products"
+                        :message="$store.state.messages.products"
                         headingText="Add new product"
                         placeholder="Product name")
                 .col-sm-12.col-md-6
-                    RecipeList(:recipes="recipes" headingText="Recipes list" className="recipes-list all-recipes")
+                    RecipeList(:recipes="$store.state.recipes" headingText="Recipes list" className="recipes-list all-recipes")
                 .col-sm-12.col-md-3
-                    RecipeList(:recipes="availableRecipes" headingText="Recipes that match your products" className="recipes-list")
+                    RecipeList(:recipes="$store.state.availableRecipes" headingText="Recipes that match your products" className="recipes-list")
                     SubmitForm(
-                        :error="errors.recipes"
+                        :error="$store.state.errors.recipes"
                         :element="recipe"
                         :method="addRecipe"
-                        :message="messages.recipes"
+                        :message="$store.state.messages.recipes"
                         headingText="Add new recipe"
                         placeholder="Recipe title")
 </template>
@@ -30,8 +30,6 @@
     import ProductsList from "../components/ProductsList";
     import SubmitForm from "../components/SubmitForm";
 
-    const PRODUCTS_API_URL = "http://localhost:4000/products/";
-    const RECIPES_API_URL = "http://localhost:4000/recipes/";
 
     export default {
         name: "App",
@@ -43,7 +41,6 @@
         data: function () {
             return {
                 // products: ["cabbage", "potatoes", "carrot", "chicken", "beef", "cod", "apples", "wine", "leek", "onion", "mushrooms", "peach", "plums"],
-                selectedProducts: [],
                 // recipes: [
                 //     {id: 1, title: "Chicken with cabbage and potatoes", ingredients: ["chicken", "cabbage", "potatoes"]},
                 //     {id: 2, title: "Carrot with cabbage", ingredients: ["carrot", "cabbage"]},
@@ -54,122 +51,31 @@
                 //     {id: 7, title: "Apples in wine with carrot", ingredients: ["apples", "carrot", "wine"]},
                 //     {id: 8, title: "Chicken with potatoes, carrot, leek and peach", ingredients: ["potatoes", "leek", "peach", "carrot", "chicken"]},
                 //     ],
-                availableRecipes: [],
-                errors: {
-                    products: '',
-                    recipes: ''
-                },
-                messages: {
-                    products: '',
-                    recipes: ''
-                },
-                products: [],
                 product: {
                     name: ''
                 },
-                recipes: [],
                 recipe: {
                     title: '',
                     ingredients: []
                 }
             };
         },
-        mounted() {
-            fetch(PRODUCTS_API_URL + 'getAll')
-                .then(response => response.json())
-                .then(result => {
-                    this.products = result;
-                });
-            fetch(RECIPES_API_URL + 'getAll')
-                .then(response => response.json())
-                .then(result => {
-                    this.recipes = result;
-                });
+        created() {
+            this.$store.dispatch('getProducts');
+            this.$store.dispatch('getRecipes');
         },
         methods: {
             selectProduct(product) {
-                if (this.selectedProducts.includes(product)) {
-                    this.selectedProducts = this.selectedProducts.filter(
-                        el => el !== product
-                    );
-                } else {
-                    this.selectedProducts.push(product);
-                }
-                this.checkMatch();
-            },
-            checkMatch() {
-                this.recipes.forEach((el)=> {
-                    const ingredientsAmmount = el.ingredients.length;
-                    let matches = 0;
-
-                    if (el.ingredients.length > this.selectedProducts.length) {
-                        if (this.availableRecipes.includes(el)) {
-                            this.availableRecipes = this.availableRecipes.filter(elem => elem !== el)
-                        }
-                        return false
-                    } else {
-                        el.ingredients.forEach((element)=>{
-                            this.selectedProducts.forEach((product) => {
-                                if (product.toLowerCase() === element.toLowerCase()) {
-                                    matches++;
-                                }
-                            })
-                        })
-                    }
-
-                    if (matches === ingredientsAmmount) {
-                        if (!this.availableRecipes.includes(el)) {
-                            this.availableRecipes.push(el)
-                        }
-                    } else if (this.availableRecipes.includes(el)) {
-                        this.availableRecipes = this.availableRecipes.filter(elem => elem !== el)
-                    }
-                })
+                this.$store.dispatch('selectProduct',  product  );
             },
             addProduct() {
-                fetch(PRODUCTS_API_URL + 'add', {
-                    method: "POST",
-                    body: JSON.stringify(this.product),
-                    headers: {
-                        "content-type": "application/json"
-                    }
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.status !== 200) {
-                            this.errors.products = result.message;
-                            this.messages.products = ''
-                        } else {
-                            this.errors.products = "";
-                            this.messages.products = `New product: ${this.product.name} has been added`;
-                            this.products.push(result.details);
-                            this.product.name = "";
-                        }
-                    })
+                this.$store.dispatch('createProduct', {name: this.product.name} );
+                this.product.name = "";
             },
             addRecipe() {
                 let formattedRecipe = this.formatRecipe(this.recipe);
-
-                fetch(RECIPES_API_URL + 'add', {
-                    method: "POST",
-                    body: JSON.stringify(formattedRecipe),
-                    headers: {
-                        "content-type": "application/json"
-                    }
-                })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.status !== 200) {
-                            this.errors.recipes = result.error._message;
-                            this.messages.recipes = ''
-                        } else {
-                            this.errors.recipes = "";
-                            this.messages.recipes = `New recipe: ${this.recipe.title} has been added`;
-                            this.recipe.title = "";
-                            this.recipe.ingredients = [];
-                            this.recipes.push(result.details)
-                        }
-                    })
+                this.$store.dispatch('createRecipe', { title: formattedRecipe.title, ingredients: formattedRecipe.ingredients } );
+                this.product.name = "";
             },
             formatRecipe(myRecipe) {
                 let recipeFormatted = myRecipe;

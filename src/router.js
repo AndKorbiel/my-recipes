@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { isValidAccessToken } from "./api/auth";
+import { isValidAccessToken } from "./store/api/auth";
 
 function auth(to, from, next) {
     if (isValidAccessToken() === true) {

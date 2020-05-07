@@ -2,7 +2,7 @@
     .product-list
         .heading
             h2 Select the ingredients you have
-        SingleProduct(v-for="product of products"
+        SingleProduct(v-for="product of $store.state.products"
             :key="product.id"
             :productName="product.name"
             :selectProduct="selectProduct")
@@ -17,7 +17,6 @@
             SingleProduct
         },
         props: {
-            products: Array,
             selectProduct: Function
         }
     }
