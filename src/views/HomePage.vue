@@ -3,24 +3,24 @@
         .container-fluid
             .row
                 .col-sm-12.col-md-3
-                    ProductsList(:selectProduct="selectProduct")
+                    ProductsList
                     SubmitForm(
-                        :error="$store.state.errors.products"
+                        :error="productsErrors"
                         mode="Product"
                         :element="product"
                         :method="addProduct"
-                        :message="$store.state.messages.products"
+                        :message="productsMessages"
                         headingText="Add new product"
                         placeholder="Product name")
                 .col-sm-12.col-md-6
-                    RecipeList(:recipes="$store.state.recipes" headingText="Recipes list" className="recipes-list all-recipes")
+                    RecipeList(:recipes="recipesList" headingText="Recipes list" className="recipes-list all-recipes")
                 .col-sm-12.col-md-3
-                    RecipeList(:recipes="$store.state.availableRecipes" headingText="Recipes that match your products" className="recipes-list")
+                    RecipeList(:recipes="availableRecipesList" headingText="Recipes that match your products" className="recipes-list")
                     SubmitForm(
-                        :error="$store.state.errors.recipes"
+                        :error="recipesErrors"
                         :element="recipe"
                         :method="addRecipe"
-                        :message="$store.state.messages.recipes"
+                        :message="recipesMessages"
                         headingText="Add new recipe"
                         placeholder="Recipe title")
 </template>
@@ -29,7 +29,7 @@
     import RecipeList from "../components/RecipesList";
     import ProductsList from "../components/ProductsList";
     import SubmitForm from "../components/SubmitForm";
-
+    import { mapActions, mapGetters } from "vuex";
 
     export default {
         name: "App",
@@ -40,17 +40,6 @@
         },
         data: function () {
             return {
-                // products: ["cabbage", "potatoes", "carrot", "chicken", "beef", "cod", "apples", "wine", "leek", "onion", "mushrooms", "peach", "plums"],
-                // recipes: [
-                //     {id: 1, title: "Chicken with cabbage and potatoes", ingredients: ["chicken", "cabbage", "potatoes"]},
-                //     {id: 2, title: "Carrot with cabbage", ingredients: ["carrot", "cabbage"]},
-                //     {id: 3, title: "Cabbage with potatoes", ingredients: ["cabbage", "potatoes"]},
-                //     {id: 4, title: "Chicken with potatoes, carrot and cabbage", ingredients: ["chicken", "potatoes", "carrot", "cabbage"]},
-                //     {id: 5, title: "Beef in wine with cabbage", ingredients: ["beef", "cabbage", "wine"]},
-                //     {id: 6, title: "Chicken with mushrooms and onion", ingredients: ["chicken", "mushrooms", "onion"]},
-                //     {id: 7, title: "Apples in wine with carrot", ingredients: ["apples", "carrot", "wine"]},
-                //     {id: 8, title: "Chicken with potatoes, carrot, leek and peach", ingredients: ["potatoes", "leek", "peach", "carrot", "chicken"]},
-                //     ],
                 product: {
                     name: ''
                 },
@@ -60,21 +49,18 @@
                 }
             };
         },
-        created() {
-            this.$store.dispatch('getProducts');
-            this.$store.dispatch('getRecipes');
+        computed: {
+            ...mapGetters("products", ["productsList", "productsErrors", "productsMessages", "recipesList", "recipesErrors", "availableRecipesList", "recipesMessages"])
         },
         methods: {
-            selectProduct(product) {
-                this.$store.dispatch('selectProduct',  product  );
-            },
+            ...mapActions("products", ["getProducts", "getRecipes",  "createProduct", "createRecipe"]),
             addProduct() {
-                this.$store.dispatch('createProduct', {name: this.product.name} );
+                this.createProduct({name: this.product.name} );
                 this.product.name = "";
             },
             addRecipe() {
                 let formattedRecipe = this.formatRecipe(this.recipe);
-                this.$store.dispatch('createRecipe', { title: formattedRecipe.title, ingredients: formattedRecipe.ingredients } );
+                this.createRecipe( { title: formattedRecipe.title, ingredients: formattedRecipe.ingredients } );
                 this.product.name = "";
             },
             formatRecipe(myRecipe) {
@@ -87,7 +73,11 @@
 
                 return recipeFormatted
             }
-        }
+        },
+        created() {
+            this.getProducts();
+            this.getRecipes();
+        },
     };
 </script>
 <style lang="scss">

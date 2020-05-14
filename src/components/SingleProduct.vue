@@ -4,11 +4,12 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
+
     export default {
         name: "SingleProduct",
         props: {
             productName: String,
-            selectProduct: Function
         },
         data: function(){
             return {
@@ -16,6 +17,10 @@
             }
         },
         methods: {
+            ...mapActions("products", ["addProductToSelected"]),
+            selectProduct(product) {
+                this.addProductToSelected(product);
+            },
             select: function () {
                 this.selected = !this.selected
             }

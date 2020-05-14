@@ -2,7 +2,7 @@
     .product-list
         .heading
             h2 Select the ingredients you have
-        SingleProduct(v-for="product of $store.state.products"
+        SingleProduct(v-for="product of productsList"
             :key="product.id"
             :productName="product.name"
             :selectProduct="selectProduct")
@@ -10,14 +10,15 @@
 
 <script>
     import SingleProduct from "./SingleProduct";
+    import { mapGetters } from "vuex";
 
     export default {
         name: "ProductsList",
         components: {
             SingleProduct
         },
-        props: {
-            selectProduct: Function
+        computed: {
+            ...mapGetters("products", ["productsList"])
         }
     }
 </script>
