@@ -20,10 +20,13 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
 
         h2, .h2 {
             font-size: 25px;
+        }
+
+        .main-container {
+            margin-top: 60px;
         }
     }
 </style>

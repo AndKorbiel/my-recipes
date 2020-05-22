@@ -1,6 +1,7 @@
 <template lang="pug">
     #app
-        .container-fluid
+        Navbar
+        .container-fluid.main-container
             .row
                 .col-sm-12.col-md-3
                     ProductsList
@@ -30,10 +31,12 @@
     import ProductsList from "../components/ProductsList";
     import SubmitForm from "../components/SubmitForm";
     import { mapActions, mapGetters } from "vuex";
+    import Navbar from "../components/Navbar";
 
     export default {
         name: "App",
         components: {
+            Navbar,
             RecipeList,
             ProductsList,
             SubmitForm

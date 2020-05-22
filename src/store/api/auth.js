@@ -52,6 +52,7 @@ export function checkTokenValidity(token) {
 }
 
 export function isValidAccessToken() {
+    console.log('checking!')
     return checkTokenValidity(getAccessToken());
 }
 

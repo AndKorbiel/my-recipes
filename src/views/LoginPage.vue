@@ -1,6 +1,7 @@
 <template lang="pug">
     #app
-        .container-fluid
+        Navbar
+        .container-fluid.main-container
             .row
                 .col-sm-12.col-md-4.offset-md-4
                     h1 Please login to get access to app
@@ -16,13 +17,15 @@
 
 <script>
     import SubmitForm from "../components/SubmitForm";
+    import Navbar from "../components/Navbar";
     const USERS_API_URL = "http://localhost:4000/users/";
     import { mapActions } from "vuex";
 
     export default {
         name: "LoginPage",
         components: {
-            SubmitForm
+            SubmitForm,
+            Navbar
         },
         data: function () {
             return {
