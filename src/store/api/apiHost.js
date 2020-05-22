@@ -1,8 +1,8 @@
 import * as Axios from "axios";
 import * as Auth from "./auth";
-// import store from "../store";
+import store from "../store";
 
-const apiHost = "http://localhost:4200";
+const apiHost = "http://localhost:4000/users/";
 
 export const authenticationHeader = () => {
     return {
@@ -23,7 +23,7 @@ api.interceptors.response.use(
     async error => {
         const { status } = error.response;
         if (status === 401) {
-            // await store.dispatch("auth/logoutUser", null, { root: true });
+            await store.dispatch("auth/logoutUser", null, { root: true });
         }
         return Promise.reject(error);
     }

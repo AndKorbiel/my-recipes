@@ -17,6 +17,7 @@
 <script>
     import SubmitForm from "../components/SubmitForm";
     const USERS_API_URL = "http://localhost:4000/users/";
+    import { mapActions } from "vuex";
 
     export default {
         name: "LoginPage",
@@ -38,6 +39,7 @@
             }
         },
         methods: {
+            ...mapActions("auth", ["authenticationUser"]),
             login() {
                 fetch(USERS_API_URL + 'login', {
                     method: "POST",
@@ -59,7 +61,13 @@
                         }
                     })
                     .then(() => {
-                        this.$router.push({ name: "homePage" });
+                        this.authenticationUser({
+                            email: this.user.email,
+                            password: this.user.password
+                        })
+                            .then(() => {
+                                this.$router.push({ name: "homePage" });
+                            })
                     })
             }
         }

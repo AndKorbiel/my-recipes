@@ -4,13 +4,12 @@
             h2 Select the ingredients you have
         SingleProduct(v-for="product of productsList"
             :key="product.id"
-            :productName="product.name"
-            :selectProduct="selectProduct")
+            :productName="product.name")
 </template>
 
 <script>
     import SingleProduct from "./SingleProduct";
-    import { mapGetters } from "vuex";
+    import {mapGetters} from "vuex";
 
     export default {
         name: "ProductsList",
