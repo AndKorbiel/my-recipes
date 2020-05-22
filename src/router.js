@@ -11,26 +11,20 @@ function auth(to, from, next) {
 
 function noAuth(to, from, next) {
     if (isValidAccessToken()) {
-        return next({ name: "abc" });
+        return next({ name: "homePage" });
     }
     return next();
 }
 
-const App = () => import("./App");
 const HomePage = () => import("./views/HomePage");
 const LoginPage = () => import("./views/LoginPage");
+const RegisterNewUser = () => import("./views/RegisterNewUser");
 
 Vue.use(Router);
 
 export default new Router({
     mode: 'history',
     routes: [
-        {
-            path: "/abc",
-            name: 'abc',
-            component: App,
-            beforeEnter: noAuth
-        },
         {
             path: "/login",
             name: "login",
@@ -42,6 +36,12 @@ export default new Router({
             name: "homePage",
             component: HomePage,
             beforeEnter: auth
+        },
+        {
+            path: "/register",
+            name: "registerNewUser",
+            component: RegisterNewUser,
+            beforeEnter: noAuth
         }
     ]
 })

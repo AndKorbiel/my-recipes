@@ -4,5 +4,6 @@ export default {
     auth: {},
     account: {
         users: []
-    }
+    },
+    currentUserName: ''
 };

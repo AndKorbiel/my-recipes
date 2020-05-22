@@ -4,9 +4,9 @@ import * as Auth from '../../api/auth'
 export const constans = {
     SET_AUTHENTICATED: "SET_AUTHENTICATED",
     SET_AUTH_USER: "SET_AUTH_USER",
-    SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER:
-        "SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER",
-    SET_USERS_LIST: "SET_USERS_LIST"
+    SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER: "SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER",
+    SET_USERS_LIST: "SET_USERS_LIST",
+    SET_CURRENT_USER_NAME: "SET_CURRENT_USER_NAME"
 };
 
 export const mutations = {
@@ -23,12 +23,16 @@ export const mutations = {
     },
     [constans.SET_AUTHENTICATED](state, isAuth) {
         state.isAuthorized = isAuth;
+
     },
     [constans.SET_ID_REPRESENTING_TOKEN_REFRESH_COUNTER](state, payload) {
         state.tokenRefreshCounterId = payload;
     },
     [constans.SET_USERS_LIST](state, payload) {
         Vue.set(state.account, "users", payload.users);
+    },
+    [constans.SET_CURRENT_USER_NAME](state, payload) {
+        state.currentUserName = payload
     }
 };
 

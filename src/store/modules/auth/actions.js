@@ -28,9 +28,10 @@ export const refreshToken = async ({ commit, dispatch, state }) => {
     }
 };
 
-export const authenticationUser = async ({ dispatch }, { email, password }) => {
+export const authenticationUser = async ({ commit, dispatch }, { email, password }) => {
     return Auth.loginInTheApplication(email, password).then(async success => {
         await dispatch("authorize", success.data);
+        commit(constans.SET_CURRENT_USER_NAME, email);
     });
 };
 

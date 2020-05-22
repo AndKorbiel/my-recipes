@@ -56,11 +56,6 @@
                         if (result.status !== 200) {
                             this.errors.users = result.message;
                             this.messages.users = ''
-                        } else {
-                            this.errors.users = "";
-                            this.messages.users = `New product: ${this.product.name} has been added`;
-                            this.products.push(result.details);
-                            this.product.name = "";
                         }
                     })
                     .then(() => {
@@ -69,7 +64,7 @@
                             password: this.user.password
                         })
                             .then(() => {
-                                this.$router.push({ name: "homePage" });
+                                this.$router.push({name: "homePage"});
                             })
                     })
             }

@@ -1,18 +1,28 @@
 <template lang="pug">
     .container-fluid.navbar
         .row
-            .cols-sm-12
-                p {{ authorizationToken === true ? "autoryzacja" : "brak autoryzacji"}}
+            .col-sm-12.col-md-4
+                router-link(:to="{ path: '/home' }") Home
+                router-link(:to="{ path: '/register' }") Register new user
+            .cols-sm-12.col-md-4(v-if="authorizationToken")
+                p Zalogowano jako {{ currentUserName }}
+                button(@click="logoutUserMethod") Wyloguj
 </template>
 
 <script>
-    import { mapGetters } from "vuex";
+    import { mapGetters, mapActions } from "vuex";
 
     export default {
         name: "Navbar",
         computed: {
-            ...mapGetters("auth", ["authorizationToken"])
+            ...mapGetters("auth", ["authorizationToken", "currentUserName"])
         },
+        methods: {
+            ...mapActions("auth", ["logoutUser"]),
+            logoutUserMethod() {
+                this.logoutUser()
+            }
+        }
     }
 </script>
 

@@ -1,8 +1,8 @@
-import express from 'express'
-import authController from './controllers/auth.controller'
-import usersController from './controllers/user.controller'
-
+const express = require('express');
 const router = express.Router();
+
+const authController = require('../controllers/auth.controller');
+const usersController = require('../controllers/user.controller');
 
 router.post('/login', authController.loginUser);
 router.post('/refresh', authController.refreshTokenVerify);
