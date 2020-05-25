@@ -42,8 +42,12 @@ exports.createUser = (req, res, next) => {
                 email: req.body.email,
                 password: req.body.password
             }, (error, result) => {
-                if (error)
-                next(error);
+                if (error) {
+                    result.status(401).send({
+                        message: "Invalid email"
+                    });
+                    next(error);
+                }
         else
             res.json({
                 message: 'The user was created'

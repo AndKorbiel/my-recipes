@@ -35,13 +35,12 @@ export default new Router({
             path: "/home",
             name: "homePage",
             component: HomePage,
-            beforeEnter: auth
+            beforeEnter: auth,
         },
         {
             path: "/register",
             name: "registerNewUser",
             component: RegisterNewUser,
-            beforeEnter: noAuth
         }
     ]
 })

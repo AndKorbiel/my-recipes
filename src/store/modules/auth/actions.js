@@ -59,8 +59,10 @@ export const logoutUser = async ({ commit, dispatch }) => {
 };
 
 export const registerUser = async (ctx, data) => {
+    console.log('1')
     return Auth.registerUsers(data)
         .then(() => {
+            console.log(2)
             return Promise.resolve();
         })
         .catch(err => Promise.reject(err));

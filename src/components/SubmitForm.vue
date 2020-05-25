@@ -13,17 +13,36 @@
                            type="text"
                            class="form-control"
                            :placeholder="placeholder" required)
+
                 b-input-group(v-else-if="mode === 'Login'")
                     input(
                         v-model="element.email"
                         type="text"
                         class="form-control"
-                        :placeholder="placeholder" required)
+                        placeholder="E-mail address" required)
                     input(
                         v-model="element.password"
                         type="password"
                         class="form-control"
-                        :placeholder="placeholder" required)
+                        placeholder="Password" required)
+
+                b-input-group(v-else-if="mode === 'Register'")
+                    input(
+                        v-model="element.name"
+                        type="text"
+                        class="form-control"
+                        placeholder="User name" required)
+                    input(
+                        v-model="element.email"
+                        type="text"
+                        class="form-control"
+                        placeholder="User e-mail" required)
+                    input(
+                        v-model="element.password"
+                        type="password"
+                        class="form-control"
+                        placeholder="Password" required)
+
                 b-input-group(v-else)
                     input(
                             v-model="element.title"
