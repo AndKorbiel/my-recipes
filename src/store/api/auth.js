@@ -86,7 +86,6 @@ export async function refreshToken(refreshToken) {
 }
 
 export async function registerUsers(data) {
-    console.log('auth js log')
     return await api.post(`/register`, data, { headers: authenticationHeader() });
 }
 

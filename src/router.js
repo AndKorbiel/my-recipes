@@ -19,6 +19,7 @@ function noAuth(to, from, next) {
 const HomePage = () => import("./views/HomePage");
 const LoginPage = () => import("./views/LoginPage");
 const RegisterNewUser = () => import("./views/RegisterNewUser");
+const UserListPage = () => import("./views/UserListPage");
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
             path: "/register",
             name: "registerNewUser",
             component: RegisterNewUser,
+        },
+        {
+            path: "/user-list",
+            name: "UserListPage",
+            component: UserListPage,
         }
     ]
 })

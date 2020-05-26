@@ -64,7 +64,8 @@
             addRecipe() {
                 let formattedRecipe = this.formatRecipe(this.recipe);
                 this.createRecipe( { title: formattedRecipe.title, ingredients: formattedRecipe.ingredients } );
-                this.product.name = "";
+                this.recipe.title = "";
+                this.recipe.ingredients = [];
             },
             formatRecipe(myRecipe) {
                 let recipeFormatted = myRecipe;

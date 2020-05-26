@@ -4,6 +4,7 @@
             .col-sm-12.col-md-4
                 router-link(:to="{ path: 'home' }") Home
                 router-link(:to="{ path: 'register' }") Register new user
+                router-link(:to="{ path: 'user-list' }") Users list
             .cols-sm-12.col-md-4(v-if="authorizationToken")
                 p Zalogowano jako {{ currentUserName }}
                 button(@click="logoutUserMethod") Wyloguj

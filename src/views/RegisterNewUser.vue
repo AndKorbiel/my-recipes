@@ -17,8 +17,7 @@
 <script>
     import SubmitForm from "../components/SubmitForm";
     import Navbar from "../components/Navbar";
-    import { mapActions } from "vuex";
-    const USERS_API_URL = "http://localhost:4000/users/";
+    import {mapActions, mapGetters} from "vuex";
 
     export default {
         name: 'RegisterNewUserPage',
@@ -41,56 +40,27 @@
                 }
             }
         },
+        computed: {
+            ...mapGetters("auth", ["authToken"])
+        },
         methods: {
             ...mapActions("auth", ["registerUser", "fetchUsersList"]),
             registerNewUser() {
-                fetch(USERS_API_URL + 'register', {
-                    method: "POST",
-                    body: JSON.stringify(this.user),
-                    headers: {
-                        "content-type": "application/json"
-                    }
+                this.registerUser({
+                    email: this.user.email,
+                    password: this.user.password,
+                    name: this.user.name
+                }).then(()=> {
+                    this.errors.users = '';
+                    this.messages.users = 'New user has been added';
+                    this.user.name = '';
+                    this.user.email = '';
+                    this.user.password = '';
+                }).catch(()=> {
+                    this.errors.users = 'Something went wrong, please check provided data';
+                    this.messages.users = '';
                 })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.status !== 200) {
-                            this.errors.users = 'Something went wrong, please check provided data';
-                            this.messages.users = ''
-                        } else {
-                            this.registerUser({
-                                email: this.user.email,
-                                password: this.user.password,
-                                name: this.user.name
-                            });
-                            this.messages.users = 'New user has been added'
-                        }
-                    })
             },
-            // registerUserMethod() {
-            //     const { name, email, password } = this.fields;
-            //     if (this.$refs.form.validate()) {
-            //         this.registerUser({
-            //             email: email.value,
-            //             password: password.value,
-            //             name: name.value
-            //         })
-            //             .then(() => {
-            //                 this.$notify({
-            //                     group: "notify",
-            //                     type: "success",
-            //                     text: "Created user"
-            //                 });
-            //                 this.fetchUsersList();
-            //             })
-            //             .catch(() => {
-            //                 this.$notify({
-            //                     group: "notify",
-            //                     type: "error",
-            //                     text: "User creation failed"
-            //                 });
-            //             });
-            //     }
-            // }
         }
     }
 </script>

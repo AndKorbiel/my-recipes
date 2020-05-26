@@ -18,7 +18,6 @@
 <script>
     import SubmitForm from "../components/SubmitForm";
     import Navbar from "../components/Navbar";
-    const USERS_API_URL = "http://localhost:4000/users/";
     import { mapActions } from "vuex";
 
     export default {
@@ -44,28 +43,18 @@
         methods: {
             ...mapActions("auth", ["authenticationUser"]),
             login() {
-                fetch(USERS_API_URL + 'login', {
-                    method: "POST",
-                    body: JSON.stringify(this.user),
-                    headers: {
-                        "content-type": "application/json"
-                    }
+                this.authenticationUser({
+                    email: this.user.email,
+                    password: this.user.password
                 })
-                    .then(response => response.json())
-                    .then(result => {
-                        if (result.status !== 200) {
-                            this.errors.users = result.message;
-                            this.messages.users = ''
-                        }
+                    .then(()=> {
+                        this.$router.push({name: "homePage"});
+                        this.errors.users = '';
+                        this.messages.users = 'Provided data are valid'
+
                     })
-                    .then(() => {
-                        this.authenticationUser({
-                            email: this.user.email,
-                            password: this.user.password
-                        })
-                            .then(() => {
-                                this.$router.push({name: "homePage"});
-                            })
+                    .catch(()=> {
+                        this.errors.users = 'Invalid login data'
                     })
             }
         }

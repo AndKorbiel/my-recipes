@@ -90,12 +90,15 @@ exports.accessTokenVerify = (req, res, next) => {
     }
     const BEARER = 'Bearer';
     const AUTHORIZATION_TOKEN = req.headers.authorization.split(' ');
+    console.log(req.headers.authorization)
     if (AUTHORIZATION_TOKEN[0] !== BEARER) {
         return res.status(401).send({
             error: "Token is not complete"
         })
     }
     jwt.verify(AUTHORIZATION_TOKEN[1], TOKEN_SECRET_JWT, function(err) {
+        // console.log(AUTHORIZATION_TOKEN[1])
+        // console.log(TOKEN_SECRET_JWT)
         if (err) {
             return res.status(401).send({
                 error: "Token is invalid"
