@@ -5,8 +5,19 @@
             .row
                 .col-sm-12.col-md-4.offset-md-4
                     h1 Registered users list
-                    ul(v-for="(user, i) in usersList" :key="i")
-                        li {{ user.name }}
+                .col-sm-12.col-md-6.offset-md-3
+                    table
+                        thead
+                            td Id
+                            td Name
+                            td Email
+                            td Is admin?
+                        tbody
+                            tr(v-for="(user, i) in usersList" :key="i")
+                                td {{ i+1 }}
+                                td {{ user.name }}
+                                td {{ user.email }}
+                                td {{ user.role === 'ADMIN' ? 'Yes' : 'No' }}
 </template>
 
 <script>
@@ -33,6 +44,24 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        background: #ffffffb5;
+        box-shadow: 2px 2px 4px #b7b7b7;
 
+        thead {
+            background: #4a4a4a;
+            color: white;
+        }
+
+        tr {
+            border-bottom: 1px solid #4a4a4a;
+        }
+
+        td {
+            padding: 8px;
+        }
+    }
 </style>

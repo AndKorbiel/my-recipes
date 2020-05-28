@@ -30,7 +30,8 @@
                 user: {
                     name: '',
                     email: '',
-                    password: ''
+                    password: '',
+                    isAdmin: false
                 },
                 errors: {
                     users: ''
@@ -44,23 +45,31 @@
             ...mapGetters("auth", ["authToken"])
         },
         methods: {
-            ...mapActions("auth", ["registerUser", "fetchUsersList"]),
+            ...mapActions("auth", ["registerUser"]),
             registerNewUser() {
                 this.registerUser({
                     email: this.user.email,
                     password: this.user.password,
-                    name: this.user.name
+                    name: this.user.name,
+                    isAdmin: this.checkIfIsAdmin(this.user.isAdmin)
                 }).then(()=> {
                     this.errors.users = '';
                     this.messages.users = 'New user has been added';
                     this.user.name = '';
                     this.user.email = '';
                     this.user.password = '';
-                }).catch(()=> {
-                    this.errors.users = 'Something went wrong, please check provided data';
+                }).catch((err)=> {
+                    this.errors.users = err.response.data.message;
                     this.messages.users = '';
                 })
             },
+            checkIfIsAdmin(value) {
+                if (value == 'true') {
+                    return "ADMIN"
+                } else {
+                    return "USER"
+                }
+            }
         }
     }
 </script>

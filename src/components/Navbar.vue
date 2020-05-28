@@ -1,13 +1,13 @@
 <template lang="pug">
     .container-fluid.navbar
         .row
-            .col-sm-12.col-md-4
-                router-link(:to="{ path: 'home' }") Home
-                router-link(:to="{ path: 'register' }") Register new user
-                router-link(:to="{ path: 'user-list' }") Users list
-            .cols-sm-12.col-md-4(v-if="authorizationToken")
-                p Zalogowano jako {{ currentUserName }}
-                button(@click="logoutUserMethod") Wyloguj
+            .col-sm-12.menu
+                router-link(:to="{ path: '/' }") Home
+                router-link(:to="{ path: 'register' }" v-if="isAdmin") Register new user
+                router-link(:to="{ path: 'user-list' }" v-if="isAdmin") Users list
+                div.login-section(v-if="authorizationToken")
+                    span Logged in as: {{ currentUserName }}
+                    a(@click="logoutUserMethod") Wyloguj
 </template>
 
 <script>
@@ -16,7 +16,7 @@
     export default {
         name: "Navbar",
         computed: {
-            ...mapGetters("auth", ["authorizationToken", "currentUserName"])
+            ...mapGetters("auth", ["authorizationToken", "currentUserName", "isAdmin"])
         },
         methods: {
             ...mapActions("auth", ["logoutUser"]),
@@ -28,8 +28,49 @@
 </script>
 
 <style lang="scss">
+    @import "../sass/main.scss";
     .navbar {
         background: rgba(255, 255, 255, 0.82);
         border-bottom: 2px solid #fff;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .row {
+            width: 100%;
+        }
+
+        .menu {
+            display: flex;
+            justify-content: flex-end;
+
+            a {
+                display: block;
+                padding: 10px 15px;
+                background: #eae3d9;
+                color: $main-font-color;
+                float: left;
+                margin: 0 15px;
+                min-width: 100px;
+                border-radius: 4px;
+                box-shadow: 2px 2px 3px #c7c7c7;
+            }
+
+            .login-section {
+                border-left: 1px solid #b6b0a7;
+                margin-left: 20px;
+                padding-left: 20px;
+
+                a {
+                    float: right;
+                    cursor: pointer;
+                }
+
+                span {
+                    float: left;
+                    display: block;
+                    line-height: 44px;
+                }
+            }
+        }
     }
 </style>

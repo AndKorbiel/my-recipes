@@ -53,8 +53,8 @@
                         this.messages.users = 'Provided data are valid'
 
                     })
-                    .catch(()=> {
-                        this.errors.users = 'Invalid login data'
+                    .catch((err)=> {
+                        this.errors.users = err.response.data.message
                     })
             }
         }

@@ -40,7 +40,8 @@ exports.createUser = (req, res, next) => {
             UserSchema.create({
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: req.body.password,
+                role: req.body.isAdmin
             }, (error, result) => {
                 if (error) {
                     result.status(401).send({
@@ -55,7 +56,7 @@ exports.createUser = (req, res, next) => {
         });
         } else {
             res.status(409).send({
-                message: "The request could not be completed due to a conflict"
+                message: "Email is already registered"
             })
         }
     });
@@ -90,15 +91,12 @@ exports.accessTokenVerify = (req, res, next) => {
     }
     const BEARER = 'Bearer';
     const AUTHORIZATION_TOKEN = req.headers.authorization.split(' ');
-    console.log(req.headers.authorization)
     if (AUTHORIZATION_TOKEN[0] !== BEARER) {
         return res.status(401).send({
             error: "Token is not complete"
         })
     }
     jwt.verify(AUTHORIZATION_TOKEN[1], TOKEN_SECRET_JWT, function(err) {
-        // console.log(AUTHORIZATION_TOKEN[1])
-        // console.log(TOKEN_SECRET_JWT)
         if (err) {
             return res.status(401).send({
                 error: "Token is invalid"

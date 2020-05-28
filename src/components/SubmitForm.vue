@@ -34,7 +34,7 @@
                         placeholder="User name" required)
                     input(
                         v-model="element.email"
-                        type="text"
+                        type="email"
                         class="form-control"
                         placeholder="User e-mail" required)
                     input(
@@ -42,6 +42,12 @@
                         type="password"
                         class="form-control"
                         placeholder="Password" required)
+                    label Make an admin?
+                    select(
+                        v-model="element.isAdmin"
+                        class="form-control")
+                        option(value="false" selected) no
+                        option(value="true" selected) yes
 
                 b-input-group(v-else)
                     input(

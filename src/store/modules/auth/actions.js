@@ -31,6 +31,8 @@ export const refreshToken = async ({ commit, dispatch, state }) => {
 export const authenticationUser = async ({ commit, dispatch }, { email, password }) => {
     return Auth.loginInTheApplication(email, password).then(async success => {
         await dispatch("authorize", success.data);
+        await Auth.setLocalStorageCurrentUserName(email);
+        dispatch("getNewRefreshToken");
         commit(constans.SET_CURRENT_USER_NAME, email);
     });
 };
@@ -40,6 +42,7 @@ export const authorize = async ({ commit, dispatch }, tokens) => {
     commit(constans.SET_AUTHENTICATED, accessTokenValid);
     if(accessTokenValid) {
         commit(constans.SET_AUTH_USER, tokens);
+        commit(constans.SET_CURRENT_USER_NAME, Auth.getCurrentUserName());
         await Auth.setLocalStorageTokens(tokens);
     }
     return dispatch("refreshToken");

@@ -4,4 +4,5 @@ export default {
     authToken: state => state.auth.accessToken,
     usersList: state => state.account && state.account.users,
     currentUserName: state => state.currentUserName,
+    isAdmin: state => state.auth.rol === 'ADMIN'
 };

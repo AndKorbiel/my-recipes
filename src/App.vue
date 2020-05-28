@@ -12,6 +12,7 @@
 
     body {
         background: url('./assets/bg.jpg');
+        background-attachment: fixed;
     }
 
     #app {
@@ -19,14 +20,14 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        color: $main-font-color;
 
         h2, .h2 {
             font-size: 25px;
         }
 
         .main-container {
-            margin-top: 60px;
+            margin: 60px auto;
         }
     }
 </style>

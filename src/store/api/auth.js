@@ -13,6 +13,7 @@ import store from "../store";
 
 export const getAccessToken = () => localStorage.getItem("accessToken");
 export const getRefreshToken = () => localStorage.getItem("refreshToken");
+export const getCurrentUserName = () => localStorage.getItem("currentUserName");
 
 export function setLocalStorageTokens(tokens) {
     if (tokens.accessToken)
@@ -21,9 +22,14 @@ export function setLocalStorageTokens(tokens) {
         localStorage.setItem("refreshToken", tokens.refreshToken);
 }
 
+export function setLocalStorageCurrentUserName(data) {
+    localStorage.setItem("currentUserName", data);
+}
+
 export function removeLocalStorageTokens() {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("currentUserName");
 }
 
 export function decodeJWT(token) {
@@ -55,12 +61,17 @@ export function isValidAccessToken() {
     return checkTokenValidity(getAccessToken());
 }
 
+export function checkIfIsAdmin() {
+    return store.state.auth.auth.rol === "ADMIN";
+}
+
 export async function initializationUserAuthentication() {
     if (checkTokenValidity(getAccessToken())) {
         const data = {
             accessToken: getAccessToken(),
             refreshToken: getRefreshToken()
         };
+
         return await store.dispatch("auth/authorize", data);
     } else {
         if (checkTokenValidity(getRefreshToken())) {

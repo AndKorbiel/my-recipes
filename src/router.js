@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { isValidAccessToken } from "./store/api/auth";
+import { isValidAccessToken, checkIfIsAdmin } from "./store/api/auth";
 
 function auth(to, from, next) {
     if (!isValidAccessToken()) {
@@ -14,6 +14,15 @@ function noAuth(to, from, next) {
         return next({ name: "homePage" });
     }
     return next();
+}
+
+function isAdmin(to, from, next) {
+    if (isValidAccessToken()) {
+        if (checkIfIsAdmin()) {
+            return next()
+        }
+    }
+    return next({ name: "homePage" })
 }
 
 const HomePage = () => import("./views/HomePage");
@@ -33,7 +42,7 @@ export default new Router({
             beforeEnter: noAuth
         },
         {
-            path: "/home",
+            path: "/",
             name: "homePage",
             component: HomePage,
             beforeEnter: auth,
@@ -42,11 +51,13 @@ export default new Router({
             path: "/register",
             name: "registerNewUser",
             component: RegisterNewUser,
+            beforeEnter: isAdmin,
         },
         {
             path: "/user-list",
             name: "UserListPage",
             component: UserListPage,
+            beforeEnter: isAdmin,
         }
     ]
 })
