@@ -2,7 +2,7 @@
     .container-fluid.navbar
         .row
             .col-sm-12.menu
-                router-link(:to="{ path: '/' }") Home
+                router-link(:to="{ path: '/' }") {{ authorizationToken ? 'Home' : 'Login' }}
                 router-link(:to="{ path: 'register' }" v-if="isAdmin") Register new user
                 router-link(:to="{ path: 'user-list' }" v-if="isAdmin") Users list
                 div.login-section(v-if="authorizationToken")
@@ -42,6 +42,7 @@
         .menu {
             display: flex;
             justify-content: flex-end;
+            align-items: center;
 
             a {
                 display: block;
@@ -69,6 +70,20 @@
                     float: left;
                     display: block;
                     line-height: 44px;
+                }
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+
+                .login-section a {
+                    margin-bottom: 0;
+                }
+
+                a {
+                    margin-bottom: 1em;
                 }
             }
         }

@@ -83,6 +83,7 @@
         background: rgba(255, 255, 255, 0.749);
         padding: 15px;
         box-shadow: 2px 2px 11px #929292;
+        margin-bottom: 20px;
 
         .input-group {
             display: block;
